@@ -1,0 +1,251 @@
+﻿@model RepositoryCodes.Models.NewCode
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="~/Scripts/EditTextTinyMCE.js"></script>
+
+<style>
+
+    .AlterandoText {
+        height: 300px;
+    }
+
+    .Create {
+        background-color: white;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-style: solid;
+        border-color: #094a90;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 30px;
+    }
+
+    .modalClass {
+        padding-left: 15px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .displayTitle {
+        margin-bottom: 18px;
+        padding-top: 1%;
+    }
+
+    .displayTitleFor {
+        padding-left: 17px;
+    }
+
+    .modalcontentNewClass {
+        border-radius: 0px;
+    }
+
+    .modalDialogNewClass {
+        border: solid;
+        border-color: #094a90;
+        border-radius: 8px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .modalHeaderClass {
+        color: white;
+        background-color: #094a90;
+    }
+
+    .modal-content {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: white;
+        background-clip: padding-box;
+        border: 1px solid #094a90;
+        border-bottom-left-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        outline: 0;
+    }
+
+    .modal-header {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    .distTop {
+        padding-top: 5px;
+    }
+
+    .text {
+        cursor: text;
+    }
+</style>
+
+<div class="Top">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3 class="BigTitle"><strong><i class="fa fa-pencil-square-o"></i> Edição de código</strong></h3>
+        </div>
+    </div>
+</div>
+<div class="Create">
+
+    <div class="distTop">
+
+        @using (Html.BeginForm("Edit", "NewCodes", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                <div class="form-group classFormGroup">
+                    <div class="col-md-10 classCol">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-file-text"></i> </span>
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { maxlength = 50, @class = "form-control FieldSize", autocomplete = "off", placeholder = "Titulo" } })
+                            <strong class="paddingStrong">@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger Validation" })</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group classText diminuiMargin">
+                    <div class="col-md-10 classCol">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-link"></i> </span>
+                            @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control FieldSize", autocomplete = "off", placeholder = "Link" } })
+                        </div>
+                        <div class="NotRequired campoNotRequired">
+                            <label><u>Este campo não é obrigatório.</u></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group classText">
+                    <div class="col-md-10 classCol">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="padding-left:15px; padding-right:15px;"> <i class="fa fa-male"></i> </span>
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { maxlength = 20, @class = "form-control", autocomplete = "off", placeholder = "Nome do usuario" } })
+                            <strong class="paddingStrong">@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger Validation" })</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group classText">
+                    <div class="col-md-10 classCol">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-github"></i> </span>
+                            @Html.EditorFor(model => model.Language, new { htmlAttributes = new { maxlength = 20, @class = "form-control", autocomplete = "off", placeholder = "Linguagem utilizada" } })
+                            <strong class="paddingStrong">@Html.ValidationMessageFor(model => model.Language, "", new { @class = "text-danger Validation" })</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group classText">
+                    <div class="col-md-10 classCol">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", autocomplete = "off", placeholder = "Data" } })
+                            <strong class="paddingStrong">@Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger Validation" })</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group classText">
+                    <strong>&nbsp;&nbsp;&nbsp;<i class="fa fa-code"></i>@Html.LabelFor(model => model.Utilization, htmlAttributes: new { @class = "control-label col-md-2" })</strong>
+                    <div class="col-md-10 classCol">
+                        @Html.TextAreaFor(model => model.Utilization, new { htmlAttributes = new { @class = "form-control AlterandoText text", autocomplete = "off" } })
+                        <strong style="margin-left:-20px;">@Html.ValidationMessageFor(model => model.Utilization, "", new { @class = "text-danger Validation" })</strong>
+                    </div>
+                </div>
+
+                <div class="form-actions no-color pt-3 pb-2 mb-3 modalClass">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog modalDialogNewClass" role="document">
+                            <div class="modal-content modalcontentNewClass">
+                                <div class="modal-header modalHeaderClass">
+                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-pencil-square-o"></i> Edição de código</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Tem certeza que deseja salvar suas alterações?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times"></i> Fechar</button>
+                                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Index", "NewCodes")" class="btn btn-dark btn-large"><i class="fa fa-list"></i><span> Voltar para a lista</span></a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Salvar
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar-o'></i>",
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true
+            });
+        });
+
+    </script>
+
+}
+
+<script>
+
+    $(function () {
+        var availableTags = [
+            "Asp.Net",
+            "Java",
+            "JavaScript",
+            "SQL",
+            "C#",
+            "HTML",
+            "CSS",
+            "Ajax",
+            "Razor",
+            "Vue.Js",
+            "Angular",
+            "React.Js",
+            "JQuery"
+        ];
+        $("#Language").autocomplete({
+            source: availableTags
+        });
+    });
+
+</script>

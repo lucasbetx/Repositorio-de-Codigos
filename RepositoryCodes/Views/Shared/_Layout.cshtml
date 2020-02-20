@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositório de códigos - Lucas B.T</title>
+    <link rel="icon" href="~/Icon.ico" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+
+        .DoBody {
+            font-size: 15px;
+            font-family: Arial;
+            background-color: lightgray;
+        }
+
+        textarea {
+            width: 100%;
+            height: 600px;
+            max-width: 100%
+        }
+
+        .Top {
+            background-color: #E0EEEE;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: #094a90;
+        }
+
+        hr {
+            background-color: lightgray;
+        }
+
+        .FieldSize {
+            min-width: 80%;
+        }
+
+        .CodePost {
+            font-size: 15px;
+            font-family: Arial;
+        }
+
+        .teste {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+        .BigTitle {
+            padding-top: 0.5%;
+            color: white;
+        }
+
+        .paddingStrong {
+            padding-top: 7px;
+        }
+
+        .classText {
+            padding-bottom: 1%;
+        }
+
+        .diminuiMargin {
+            margin-bottom: 0.5% !important;
+        }
+
+        .campoNotRequired {
+            padding-top: 1%;
+        }
+
+        .Validation {
+            padding-left: 20px;
+        }
+
+        .classCol {
+            padding-top: 0.6%;
+        }
+
+        .classFormGroup {
+            padding-bottom: 1%;
+            padding-top: 0.6%;
+        }
+
+        .inputGrupo {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="#" crossorigin="anonymous">
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+
+</head>
+
+<body class="DoBody">
+
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

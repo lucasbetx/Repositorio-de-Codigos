@@ -1,0 +1,88 @@
+﻿@model RepositoryCodes.Models.NewCode
+
+<style>
+
+    .Create {
+        background-color: white;
+        padding: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .modal-footerRpt {
+        padding: 19px 20px 20px;
+        text-align: right;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .AlignDiv {
+        text-align: center;
+    }
+
+    .tamFont {
+        font-size: 12px;
+    }
+
+    .TitleSGTC {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .SubTitleSGTC {
+        font-size: 17px;
+    }
+
+    .faCode {
+        padding-bottom: 10px;
+    }
+
+    .link {
+        padding-bottom: 35px;
+        color: blue;
+    }
+
+    .lanTec {
+        padding-top: 10px;
+    }
+</style>
+
+<script src="~/Scripts/pretty.js"></script>
+
+<div class="Create">
+
+    @{
+        string Utilizacao = Model.Utilization;
+        string Link = Model.Link;
+    }
+
+    <div class="AlignDiv">
+        <p class="DateTitle">@Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Date))</p>
+        <p class="TitleSGTC">@Html.DisplayFor(model => model.Title)</p>
+        <p class="SubTitleSGTC"><strong>Nome :</strong> @Html.DisplayFor(model => model.Name)</p>
+        @if (Link != null)
+        {
+            <a class="link" href="@Html.DisplayFor(model => model.Link)" target="_blank">@Html.DisplayFor(model => model.Link)</a>
+        }
+        <p class="lanTec"><strong>Linguagem / Tecnologia :</strong> @Html.DisplayFor(model => model.Language)</p>
+    </div>
+    <hr />
+    <p>@Html.Raw(Utilizacao)</p>
+</div>
+
+<script>
+
+     $(".Back").click(function () {
+         $.ajax({
+             type: "Get",
+             url: '@Url.Action("Index", "Repositorio")',
+             data: '',
+             success: function (data) {
+                 document.getElementById('ModalFooter').className = 'modal-footerRpt';
+                 $('#Preview').html("");
+             }
+         })
+     });
+
+    $("pre").addClass("prettyprint");
+
+</script>

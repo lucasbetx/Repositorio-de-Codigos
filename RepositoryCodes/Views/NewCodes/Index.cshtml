@@ -1,0 +1,322 @@
+﻿@model PagedList.IPagedList<RepositoryCodes.Models.NewCode>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<style>
+
+    .Criacao {
+        background-color: white;
+        padding: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-style: solid;
+        border-color: #094a90;
+    }
+
+    .CriacaoDeCodigo {
+        padding-bottom: 60px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    #myInput {
+        max-width: 400px;
+        width: 400px;
+    }
+
+    .custab {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5% 0;
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
+    }
+
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+
+    thead {
+        background-color: #094a90;
+        color: white;
+    }
+
+    img {
+        padding-top: 1.5%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 10%;
+    }
+
+    .icons {
+        color: black;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .modal-dialogRpt {
+        min-width: 70%;
+    }
+
+    .modal-content {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border: solid;
+        border-color: #094a90;
+    }
+
+    .modal-contentRpt {
+        overflow: hidden;
+        overflow-y: auto;
+        max-height: 90vh;
+        max-width: 90rem;
+    }
+
+    .modal-footerRpt {
+        padding: 19px 20px 20px;
+        text-align: right;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .modal-header {
+        color: white;
+        background-color: #094a90;
+    }
+
+    .ZeroCount {
+        text-align: center;
+        padding-top: 5%;
+        padding-bottom: 10%;
+    }
+
+    .ImgTG {
+        margin-top: 10px;
+    }
+
+    .textBoox {
+        min-width: 360px;
+    }
+
+    a {
+        color: black;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+    .pagination > .active > a,
+    .pagination > .active > span,
+    .pagination > .active > a:hover,
+    .pagination > .active > span:hover,
+    .pagination > .active > a:focus,
+    .pagination > .active > span:focus {
+        z-index: 2;
+        color: black;
+        cursor: default;
+        background-color: white;
+        border-color: #094a90;
+    }
+</style>
+
+<div class="Top">
+    <form class="form-inline my-2 my-lg-0 float-right">
+        @using (Html.BeginForm("Index", "NewCodes", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control mr-sm-2 textBoox", autocomplete = "off", placeholder = "Pesquise por titulo, nome ou linguagem" })
+                <input type="submit" class="btn btn-dark btn-large" value="Pesquisar" />
+            </p>
+        }
+    </form>
+    <a href="@Url.Action("Index", "NewCodes")" class="btn btn-dark btn-large"><i class="fa fa-home"></i><span> Inicio</span></a>
+    <a href="@Url.Action("Create", "NewCodes")" class="btn btn-dark btn-large"><i class="fa fa-plus-square"></i><span> Novo código</span></a>
+</div>
+
+<div class="Criacao" id="teste">
+
+    <img src="~/Images/images.png" alt="" style="padding-top:4%;">
+
+    <div class="row">
+        <div class="col-12 text-center my-5">
+            <h1 class="display-4"><strong>Repositório de Códigos</strong></h1>
+        </div>
+    </div>
+
+
+    <div id="MyTable">
+
+        @if (Model.Count == 0)
+        {
+            <hr />
+            <div class="ZeroCount">
+                <h5>Nenhum código foi encontrado!</h5>
+            </div>
+        }
+        else
+        {
+            <div class="CriacaoDeCodigo">
+                <table class="table custab">
+                    <thead>
+                        <tr>
+                            <th>
+                                <i class="fa fa-file-text"></i>@Html.DisplayName(" Titulo:")
+                            </th>
+                            <th>
+                                <i class="fa fa-male"></i>@Html.DisplayName(" Nome:")
+                            </th>
+                            <th>
+                                <i class="fa fa-github"></i>@Html.DisplayName(" Linguagem:")
+                            </th>
+                            <th>
+                                @Html.DisplayName(" ")
+                            </th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a>&nbsp;@Html.DisplayFor(modelItem => item.Title)</a>
+                                </td>
+
+                                <td>
+                                    <a>&nbsp;@Html.DisplayFor(modelItem => item.Name)</a>
+                                </td>
+
+                                <td>
+                                    <a>&nbsp;@Html.DisplayFor(modelItem => item.Language)</a>
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("Edit", "NewCodes", new { id = item.Id }) "><i class="fa fa-pencil-square-o icons"></i></a>
+                                    <a class="toView pointer" data-id="@item.Id"><i class="fa fa-eye icons"></i></a>
+                                    <a class="delete pointer" data-id="@item.Id"><i class="fa fa-trash icons"></i></a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    }
+
+                </table>
+
+                <div>
+                    @if (Model.Count > 0)
+                    {
+                        <br />
+                        <strong>Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount</strong>
+
+                        @Html.PagedListPager(Model, page => Url.Action("Index",
+                           new { page, currentFilter = ViewBag.CurrentFilter }))
+
+                    }
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialogRpt">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="TitleModal"><i class="fa fa-info-circle"></i></h4>
+                <button type="button" class="close" data-dismiss="modal" id="Quit">&times;</button>
+            </div>
+            <span id="Ico"></span>
+            <div class="modal-body modal-contentRpt" id="Preview">
+
+            </div>
+            <div class="modal-footerRpt" id="ModalFooter">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MinhaModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="TitleModal"><i class="fa fa-trash-o"></i> Excluir atualização</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="bodyDelete" style="text-align:center">
+                <h5 style="padding-top:2%;">Deseja mesmo excluir?</h5>
+            </div>
+            <div class="deleteInput" id="footerDelete" style="text-align:center; padding-bottom: 5%; padding-top: 2%;">
+                <button type="button" class="btn btn-dark modalDeleta" id="modalDelete" data-dismiss="modal">Voltar</button>
+                <input type="submit" value="Deletar" class="btn btn-danger Exclui" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#Quit").click(function () {
+
+        $('#Preview').html("");
+
+    });
+
+
+    var idDelete = 0;
+    $(".delete").click(function () {
+        $('#MinhaModal').modal('show');
+        idDelete = $(this).attr("data-id");
+    });
+
+     $(".Exclui").click(function () {
+        id = idDelete;
+        var urlDelete = '@Url.Action("DeleteConfirmed" , "NewCodes")';
+          $.ajax({
+              type: "POST",
+              url:urlDelete,
+              data:  '{"id":"' + id + '"}',
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (result) {
+                  $('#MinhaModal').modal('hide');
+                  $.ajax({
+                      type: "Get",
+                      url: '@Url.Action("Index", "NewCodes")',
+                      data: '',
+                      success: function (data) {
+                          location.reload("#MyTable");
+                      }
+                  })
+              }
+          });
+    });
+
+    $(".toView").click(function () {
+        document.getElementById('TitleModal').innerHTML = "<i class='fa fa-eye'></i> Visualização de código";
+        $('#Preview').html("");
+        $('#myModal').modal('show');
+        document.getElementById('ModalFooter').className = '';
+        document.getElementById('ModalFooter').innerHTML = "";
+        document.getElementById('Ico').innerHTML = "<span id='Ico' style='padding: 10px; text-align: center'><h3>Carregando...</h3></span>";
+        document.getElementById('Ico').hidden = false;
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("ToView" , "NewCodes")?id=' + id,
+            data: '',
+            success: function (data) {
+                document.getElementById('ModalFooter').innerHTML = "<button type='button' class='btn btn-dark btn-large Back' data-dismiss='modal'><i class='fa fa-list'></i><span> Voltar para a lista</span></button>";
+                document.getElementById('ModalFooter').className = 'modal-footerRpt';
+                $('#Preview').html(data);
+                document.getElementById('Ico').hidden = true;
+            }
+        })
+    });
+
+</script>
